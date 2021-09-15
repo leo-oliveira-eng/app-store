@@ -27,19 +27,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Infrastructure", "04-Inf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-ExternalServices", "05-ExternalServices", "{58F61029-5EE6-442C-ADC9-91B50A1EE2C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.API", "IdentityServer.API\IdentityServer.API.csproj", "{B9B98F5A-E73D-46F7-90CC-D61E87FE3B6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.API", "IdentityServer.API\IdentityServer.API.csproj", "{B9B98F5A-E73D-46F7-90CC-D61E87FE3B6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Application", "IdentityServer.Application\IdentityServer.Application.csproj", "{76FDF0F3-9362-4E41-99AD-02BD7319BE4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Application", "IdentityServer.Application\IdentityServer.Application.csproj", "{76FDF0F3-9362-4E41-99AD-02BD7319BE4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Domain", "IdentityServer.Domain\IdentityServer.Domain.csproj", "{2FBFE84C-2A1F-4278-AAC2-8C838F0D16B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Domain", "IdentityServer.Domain\IdentityServer.Domain.csproj", "{2FBFE84C-2A1F-4278-AAC2-8C838F0D16B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.CrossCutting", "IdentityServer.CrossCutting\IdentityServer.CrossCutting.csproj", "{0D010393-DDEE-41E4-B651-FEA96E39DB4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.CrossCutting", "IdentityServer.CrossCutting\IdentityServer.CrossCutting.csproj", "{0D010393-DDEE-41E4-B651-FEA96E39DB4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Data", "IdentityServer.Data\IdentityServer.Data.csproj", "{A6B3C094-6D76-424E-BD98-B41DF7A79668}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Data", "IdentityServer.Data\IdentityServer.Data.csproj", "{A6B3C094-6D76-424E-BD98-B41DF7A79668}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.ExternalServices", "IdentityServer.ExternalServices\IdentityServer.ExternalServices.csproj", "{8ECB2951-32CC-4CDC-93B5-5EA1068EF460}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.ExternalServices", "IdentityServer.ExternalServices\IdentityServer.ExternalServices.csproj", "{8ECB2951-32CC-4CDC-93B5-5EA1068EF460}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Domain.SharedKernel", "IdentityServer.Domain.SharedKernel\IdentityServer.Domain.SharedKernel.csproj", "{D62F29AA-A742-4DCD-B7C2-861987D1B2E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Domain.SharedKernel", "IdentityServer.Domain.SharedKernel\IdentityServer.Domain.SharedKernel.csproj", "{D62F29AA-A742-4DCD-B7C2-861987D1B2E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{04F06BE3-87A4-42E7-B9A7-03F3D46E1026}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Domain.Tests", "IdentityServer.Domain.Tests\IdentityServer.Domain.Tests.csproj", "{9F926C16-3B6B-495B-980D-A9D688C4E449}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,6 +139,18 @@ Global
 		{D62F29AA-A742-4DCD-B7C2-861987D1B2E1}.Release|x64.Build.0 = Release|Any CPU
 		{D62F29AA-A742-4DCD-B7C2-861987D1B2E1}.Release|x86.ActiveCfg = Release|Any CPU
 		{D62F29AA-A742-4DCD-B7C2-861987D1B2E1}.Release|x86.Build.0 = Release|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Debug|x64.Build.0 = Debug|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Debug|x86.Build.0 = Debug|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Release|x64.ActiveCfg = Release|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Release|x64.Build.0 = Release|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Release|x86.ActiveCfg = Release|Any CPU
+		{9F926C16-3B6B-495B-980D-A9D688C4E449}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -158,6 +174,8 @@ Global
 		{A6B3C094-6D76-424E-BD98-B41DF7A79668} = {95F1DB87-2D2C-4CB5-9E28-C198C8152786}
 		{8ECB2951-32CC-4CDC-93B5-5EA1068EF460} = {58F61029-5EE6-442C-ADC9-91B50A1EE2C2}
 		{D62F29AA-A742-4DCD-B7C2-861987D1B2E1} = {FCAB616F-3F3A-48B1-88E1-0F8E701A4487}
+		{04F06BE3-87A4-42E7-B9A7-03F3D46E1026} = {FCAB616F-3F3A-48B1-88E1-0F8E701A4487}
+		{9F926C16-3B6B-495B-980D-A9D688C4E449} = {04F06BE3-87A4-42E7-B9A7-03F3D46E1026}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {678D089D-3035-465F-9A6D-051D18F409D0}
