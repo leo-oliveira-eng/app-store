@@ -1,4 +1,6 @@
 ﻿using BaseEntity.Domain.Entities;
+using IdentityServer.Domain.Enums;
+using IdentityServer.Domain.Services.Dtos;
 using IdentityServer4.Models;
 using Messages.Core;
 using Messages.Core.Extensions;
@@ -23,9 +25,15 @@ namespace IdentityServer.Domain.Models
 
         public Email Email { get; private set; }
 
+        public DateTime BirthDate { get; private set; }
+
+        public GenderType Gender { get; private set; }
+
+        public Address Address { get; private set; }
+
         public Guid? PasswordRecoverCode { get; private set; }
 
-        public DateTime? ExpirationDate { get; private set; }
+        public DateTime? RecoverPasswordExpirationDate { get; private set; }
 
         public ICollection<UserClaim> Claims { get; set; } = new HashSet<UserClaim>();
 
@@ -36,48 +44,65 @@ namespace IdentityServer.Domain.Models
         [Obsolete(ConstructorObsoleteMessage, true)]
         User() : base(Guid.NewGuid()) { }
 
-        User(CPF cpf, string name, string password, Email email) : base(Guid.NewGuid())
+        User(CPF cpf, string name, string password, Email email, DateTime birthDate, GenderType gender, Address address)
+            : base(Guid.NewGuid())
         {
             CPF = cpf;
             Name = name;
             Password = password;
             Email = email;
+            BirthDate = birthDate;
+            Gender = gender;
+            Address = address;
         }
 
         #endregion
 
         #region Methods
 
-        public static Response<User> Create(string cpf, string name, string password, string email)
+        public static Response<User> Create(CreateUserDto dto)
         {
             var response = Response<User>.Create();
 
-            var userIsValidResponse = UserIsValid(cpf, name, password, email);
+            var userIsValidResponse = UserIsValid(dto);
 
             if (userIsValidResponse.HasError)
                 return response.WithMessages(userIsValidResponse.Messages);
 
-            return response.SetValue(new User(CPF.Create(cpf), name, password.Sha256(), Email.Create(email)));
+            return response.SetValue(new User(CPF.Create(dto.Cpf), dto.Name, dto.Password.Sha256(),
+                Email.Create(dto.Email), dto.BirthDate, dto.Gender, dto.Address));
         }
 
-        private static Response UserIsValid(string cpf, string name, string password, string email)
+        private static Response UserIsValid(CreateUserDto dto)
         {
             var response = Response.Create();
 
-            if (!CPF.IsValid(cpf))
-                response.WithBusinessError(nameof(cpf), $"{nameof(cpf)} is invalid");
+            if (!CPF.IsValid(dto.Cpf))
+                response.WithBusinessError(nameof(dto.Cpf), $"{nameof(dto.Cpf)} is invalid");
 
-            if (string.IsNullOrWhiteSpace(name))
-                response.WithBusinessError(nameof(name), $"{nameof(name)} is invalid");
+            if (string.IsNullOrWhiteSpace(dto.Name))
+                response.WithBusinessError(nameof(dto.Name), $"{nameof(dto.Name)} is invalid");
 
-            if (!PasswordIsValid(password))
-                response.WithBusinessError(nameof(password), "Password must contain at least six characters, one uppercase letter, one lowercase letter and one number");
+            if (!PasswordIsValid(dto.Password))
+                response.WithBusinessError(nameof(dto.Password), "Password must contain at least six characters, one uppercase letter, one lowercase letter and one number");
 
-            if (!Email.IsValid(email))
-                response.WithBusinessError(nameof(email), $"{nameof(email)} is invalid");
+            if (!Email.IsValid(dto.Email))
+                response.WithBusinessError(nameof(dto.Email), $"{nameof(dto.Email)} is invalid");
+
+            if (!BirthDateIsValid(dto.BirthDate))
+                response.WithBusinessError(nameof(dto.BirthDate), $"{nameof(dto.BirthDate)} is invalid.");
+
+            if (!Enum.IsDefined(typeof(GenderType), dto.Gender))
+                response.WithBusinessError(nameof(dto.Gender), $"{nameof(dto.Gender)} is invalid");
+
+            if (dto.Address is null)
+                response.WithBusinessError(nameof(dto.Address), $"{nameof(dto.Address)} is invalid");
 
             return response;
         }
+
+        private static bool BirthDateIsValid(DateTime birthDate)
+            => birthDate.Date <= DateTime.Today.AddYears(-18) && birthDate > DateTime.Today.AddYears(-120);
 
         private static bool PasswordIsValid(string password)
         {
@@ -109,7 +134,7 @@ namespace IdentityServer.Domain.Models
         public void GeneratePasswordRecoverCode()
         {
             PasswordRecoverCode = Guid.NewGuid();
-            ExpirationDate = DateTime.Now.AddHours(2);
+            RecoverPasswordExpirationDate = DateTime.Now.AddHours(2);
         }
 
         public Response ChangePassword(Guid recoverPasswordCode, string password)
@@ -128,7 +153,7 @@ namespace IdentityServer.Domain.Models
 
             PasswordRecoverCode = null;
 
-            ExpirationDate = null;
+            RecoverPasswordExpirationDate = null;
 
             return response;
         }
@@ -140,7 +165,7 @@ namespace IdentityServer.Domain.Models
             if (!PasswordRecoverCode.HasValue || !PasswordRecoverCode.Equals(recoverPasswordCode))
                 return response.WithBusinessError("Code is invalid.");
 
-            if (ExpirationDate < DateTime.Now)
+            if (RecoverPasswordExpirationDate < DateTime.Now)
                 return response.WithBusinessError("Code has expired.");
 
             return response;

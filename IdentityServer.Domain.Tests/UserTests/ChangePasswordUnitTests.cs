@@ -5,8 +5,6 @@ using IdentityServer.Domain.Tests.Shared;
 using IdentityServer4.Models;
 using Messages.Core.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace IdentityServer.Domain.Tests.UserTests
@@ -19,7 +17,7 @@ namespace IdentityServer.Domain.Tests.UserTests
             var passwordRecoverCode = Guid.NewGuid();
             var user = Builder<User>.CreateNew()
                 .With(x => x.PasswordRecoverCode, passwordRecoverCode)
-                .With(x => x.ExpirationDate, DateTime.Now.AddHours(2))
+                .With(x => x.RecoverPasswordExpirationDate, DateTime.Now.AddHours(2))
                 .Build();
 
             var response = user.ChangePassword(passwordRecoverCode, "Abc123");
@@ -35,7 +33,7 @@ namespace IdentityServer.Domain.Tests.UserTests
         {
             var user = Builder<User>.CreateNew()
                 .With(x => x.PasswordRecoverCode, Guid.NewGuid())
-                .With(x => x.ExpirationDate, DateTime.Now)
+                .With(x => x.RecoverPasswordExpirationDate, DateTime.Now)
                 .Build();
 
             var response = user.ChangePassword(Guid.Empty, "Abc123");
@@ -52,7 +50,7 @@ namespace IdentityServer.Domain.Tests.UserTests
             var passwordRecoverCode = Guid.NewGuid();
             var user = Builder<User>.CreateNew()
                 .With(x => x.PasswordRecoverCode, passwordRecoverCode)
-                .With(x => x.ExpirationDate, DateTime.Now.AddDays(-1))
+                .With(x => x.RecoverPasswordExpirationDate, DateTime.Now.AddDays(-1))
                 .Build();
 
             var response = user.ChangePassword(passwordRecoverCode, "Abc123");
@@ -69,7 +67,7 @@ namespace IdentityServer.Domain.Tests.UserTests
             var passwordRecoverCode = Guid.NewGuid();
             var user = Builder<User>.CreateNew()
                 .With(x => x.PasswordRecoverCode, passwordRecoverCode)
-                .With(x => x.ExpirationDate, DateTime.Now.AddHours(2))
+                .With(x => x.RecoverPasswordExpirationDate, DateTime.Now.AddHours(2))
                 .Build();
 
             var response = user.ChangePassword(passwordRecoverCode, "none");

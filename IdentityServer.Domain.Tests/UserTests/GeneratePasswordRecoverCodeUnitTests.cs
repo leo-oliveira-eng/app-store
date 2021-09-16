@@ -15,8 +15,8 @@ namespace IdentityServer.Domain.Tests.UserTests
             user.GeneratePasswordRecoverCode();
 
             user.PasswordRecoverCode.Should().NotBeNull();
-            user.ExpirationDate.Should().NotBeNull();
-            user.ExpirationDate.Value.Date.Should().Be(DateTime.Today);
+            user.RecoverPasswordExpirationDate.Should().NotBeNull();
+            user.RecoverPasswordExpirationDate.Value.Date.Should().Be(DateTime.Today);
         }
     }
 }
