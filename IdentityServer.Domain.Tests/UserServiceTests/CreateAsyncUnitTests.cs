@@ -9,7 +9,7 @@ using Xunit;
 
 namespace IdentityServer.Domain.Tests.UserServiceTests
 {
-    public class CreateAyncUnitTests : UserServiceUnitTests
+    public class CreateAsyncUnitTests : UserServiceUnitTests
     {
         [Fact]
         public async Task CreateAsync_Success_ValidParametes()

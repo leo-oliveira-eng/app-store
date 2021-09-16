@@ -1,4 +1,5 @@
 ﻿using BaseEntity.Domain.UnitOfWork;
+using IdentityServer.Domain.Events.Contracts;
 using IdentityServer.Domain.Repositories;
 using IdentityServer.Domain.Services;
 using IdentityServer.Domain.Tests.Shared;
@@ -14,6 +15,8 @@ namespace IdentityServer.Domain.Tests.UserServiceTests
 
         protected readonly Mock<IUserRepository> _userRepository = new Mock<IUserRepository>();
 
+        protected readonly Mock<IDomainEventHandler> _domainEventHandler = new Mock<IDomainEventHandler>();
+
         #endregion
 
         #region Properties
@@ -26,7 +29,7 @@ namespace IdentityServer.Domain.Tests.UserServiceTests
 
         public UserServiceUnitTests()
         {
-            UserService = new UserService(_userRepository.Object, _uow.Object);
+            UserService = new UserService(_userRepository.Object, _uow.Object, _domainEventHandler.Object);
         }
 
         #endregion

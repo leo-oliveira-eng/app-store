@@ -1,13 +1,18 @@
 ﻿using BaseEntity.Domain.UnitOfWork;
+using IdentityServer.Domain.Events;
+using IdentityServer.Domain.Events.Contracts;
+using IdentityServer.Domain.Events.Models;
 using IdentityServer.Domain.Models;
 using IdentityServer.Domain.Repositories;
 using IdentityServer.Domain.Services.Contracts;
 using IdentityServer.Domain.Services.Dtos;
+using Mapster;
 using Messages.Core;
 using Messages.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Valuables.Utils;
 
 namespace IdentityServer.Domain.Services
 {
@@ -17,10 +22,13 @@ namespace IdentityServer.Domain.Services
 
         private IUnitOfWork UnitOfWork { get; }
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        private IDomainEventHandler DomainEventHandler { get; }
+
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IDomainEventHandler domainEventHandler)
         {
             UserRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            DomainEventHandler = domainEventHandler ?? throw new ArgumentNullException(nameof(domainEventHandler));
         }
 
         public async Task<Response<User>> CreateAsync(CreateUserDto dto)
@@ -63,6 +71,27 @@ namespace IdentityServer.Domain.Services
                 if (addClaimResponse.HasError)
                     response.WithMessages(addClaimResponse.Messages);
             });
+
+            return response;
+        }
+
+        public async Task<Response> RecoverPasswordAsync(string cpf)
+        {
+            var response = Response.Create();
+
+            var user = await UserRepository.FindByCPFAsync(CPF.Clear(cpf));
+
+            if (!user.HasValue)
+                return response.WithBusinessError("User not found");
+
+            user.Value.GeneratePasswordRecoverCode();
+
+            await UserRepository.UpdateAsync(user);
+
+            if (!await UnitOfWork.CommitAsync())
+                return response.WithCriticalError("Failed to save new user.");
+
+            DomainEventHandler.Raise(new RecoverPasswordEvent(user.Value.Adapt<RecoverPasswordEventModel>()));
 
             return response;
         }
