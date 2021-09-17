@@ -8,5 +8,9 @@ namespace IdentityServer.Domain.Services.Contracts
     public interface IUserService
     {
         Task<Response<User>> CreateAsync(CreateUserDto dto);
+
+        Task<Response> RecoverPasswordAsync(string cpf);
+
+        Task<Response> ChangePasswordAsync(ChangePasswordDto dto);
     }
 }

@@ -13,6 +13,8 @@ namespace IdentityServer.Domain.Services.Dtos
 
         public string Password { get; set; }
 
+        public string PasswordConfirmation { get; set; }
+
         public string Email { get; set; }
 
         public DateTime BirthDate { get; set; }

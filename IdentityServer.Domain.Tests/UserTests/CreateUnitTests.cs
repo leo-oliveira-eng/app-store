@@ -63,7 +63,7 @@ namespace IdentityServer.Domain.Tests.UserTests
             response.Messages.Should().HaveCount(1);
             response.Data.HasValue.Should().BeFalse();
             response.Data.Value.Should().BeNull();
-            response.Messages.Should().Contain(x => x.Property.Equals("Password"));
+            response.Messages.Should().Contain(x => x.Property.Equals("password"));
         }
 
         [Fact]

@@ -83,8 +83,10 @@ namespace IdentityServer.Domain.Models
             if (string.IsNullOrWhiteSpace(dto.Name))
                 response.WithBusinessError(nameof(dto.Name), $"{nameof(dto.Name)} is invalid");
 
-            if (!PasswordIsValid(dto.Password))
-                response.WithBusinessError(nameof(dto.Password), "Password must contain at least six characters, one uppercase letter, one lowercase letter and one number");
+            var passwordValidateResponse = PasswordIsValid(dto.Password, dto.PasswordConfirmation);
+
+            if (passwordValidateResponse.HasError)
+                response.WithMessages(passwordValidateResponse.Messages);
 
             if (!Email.IsValid(dto.Email))
                 response.WithBusinessError(nameof(dto.Email), $"{nameof(dto.Email)} is invalid");
@@ -104,14 +106,22 @@ namespace IdentityServer.Domain.Models
         private static bool BirthDateIsValid(DateTime birthDate)
             => birthDate.Date <= DateTime.Today.AddYears(-18) && birthDate > DateTime.Today.AddYears(-120);
 
-        private static bool PasswordIsValid(string password)
+        private static Response PasswordIsValid(string password, string passwordConfirmation)
         {
+            var response = Response.Create();
+
             if (string.IsNullOrWhiteSpace(password))
-                return false;
+                return response.WithBusinessError(nameof(password), $"{nameof(password)} is invalid");
+
+            if (!password.Equals(passwordConfirmation))
+                return response.WithBusinessError(nameof(password), "Passwords don't match");
 
             var regex = new Regex(PASSWORD_CHECK_EXPRESSION);
 
-            return regex.IsMatch(password);
+            if (!regex.IsMatch(password))
+                return response.WithBusinessError(nameof(password), "Password must contain at least six characters, one uppercase letter, one lowercase letter and one number");
+
+            return response;
         }
 
         public Response AddClaim(Claim claim)
@@ -137,7 +147,7 @@ namespace IdentityServer.Domain.Models
             RecoverPasswordExpirationDate = DateTime.Now.AddHours(2);
         }
 
-        public Response ChangePassword(Guid recoverPasswordCode, string password)
+        public Response ChangePassword(Guid recoverPasswordCode, string password, string passwordConfirmation)
         {
             var response = Response.Create();
 
@@ -146,8 +156,10 @@ namespace IdentityServer.Domain.Models
             if (recoverPasswrodIsValidResponse.HasError)
                 return response.WithMessages(recoverPasswrodIsValidResponse.Messages);
 
-            if (!PasswordIsValid(password))
-                return response.WithBusinessError(nameof(password), "Password must contain at least six characters, one uppercase letter, one lowercase letter and one number");
+            var passwordValidateResponse = PasswordIsValid(password, passwordConfirmation);
+
+            if (passwordValidateResponse.HasError)
+                response.WithMessages(passwordValidateResponse.Messages);
 
             Password = password.Sha256();
 

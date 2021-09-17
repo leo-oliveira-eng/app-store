@@ -20,7 +20,7 @@ namespace IdentityServer.Domain.Tests.UserTests
                 .With(x => x.RecoverPasswordExpirationDate, DateTime.Now.AddHours(2))
                 .Build();
 
-            var response = user.ChangePassword(passwordRecoverCode, "Abc123");
+            var response = user.ChangePassword(passwordRecoverCode, "Abc123", "Abc123");
 
             response.Should().NotBeNull();
             response.HasError.Should().BeFalse();
@@ -36,7 +36,7 @@ namespace IdentityServer.Domain.Tests.UserTests
                 .With(x => x.RecoverPasswordExpirationDate, DateTime.Now)
                 .Build();
 
-            var response = user.ChangePassword(Guid.Empty, "Abc123");
+            var response = user.ChangePassword(Guid.Empty, "Abc123", "Abc123");
 
             response.Should().NotBeNull();
             response.HasError.Should().BeTrue();
@@ -53,7 +53,7 @@ namespace IdentityServer.Domain.Tests.UserTests
                 .With(x => x.RecoverPasswordExpirationDate, DateTime.Now.AddDays(-1))
                 .Build();
 
-            var response = user.ChangePassword(passwordRecoverCode, "Abc123");
+            var response = user.ChangePassword(passwordRecoverCode, "Abc123", "Abc123");
 
             response.Should().NotBeNull();
             response.HasError.Should().BeTrue();
@@ -70,7 +70,7 @@ namespace IdentityServer.Domain.Tests.UserTests
                 .With(x => x.RecoverPasswordExpirationDate, DateTime.Now.AddHours(2))
                 .Build();
 
-            var response = user.ChangePassword(passwordRecoverCode, "none");
+            var response = user.ChangePassword(passwordRecoverCode, "none", "none");
 
             response.Should().NotBeNull();
             response.HasError.Should().BeTrue();

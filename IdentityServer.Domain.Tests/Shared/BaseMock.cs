@@ -24,12 +24,14 @@ namespace IdentityServer.Domain.Tests.Shared
                 , uf ?? "RJ"
                 , complement);
 
-        public CreateUserDto CreateUserDtoFake(string name = null, string cpf = null, string password = null, string email = null,
-            DateTime? birthDate = null, GenderType gender = default, Address address = null)
+        public CreateUserDto CreateUserDtoFake(string name = null, string cpf = null, string password = null,
+            string passwordConfirmation = null, string email = null, DateTime? birthDate = null, GenderType gender = default,
+            Address address = null)
             => Builder<CreateUserDto>.CreateNew()
                 .With(_ => _.Name, name ?? "Any Name")
                 .With(_ => _.Cpf, cpf ?? "987.654.321-00")
                 .With(_ => _.Password, password ?? "Abc123")
+                .With(_ => _.PasswordConfirmation, passwordConfirmation ?? "Abc123")
                 .With(_ => _.Email, email ?? "any@nothing.com")
                 .With(_ => _.BirthDate, birthDate ?? DateTime.Today.AddYears(-20))
                 .With(_ => _.Gender, gender == default ? GenderType.Other : gender)
@@ -39,5 +41,13 @@ namespace IdentityServer.Domain.Tests.Shared
         public User UserFake(CreateUserDto dto = null)
             => User.Create(dto ?? CreateUserDtoFake())
             .Data.Value;
+
+        public ChangePasswordDto ChangePasswordDtoFake(Guid? passwordRecoverCode = null, string password = null,
+            string passwordConfirmation = null)
+            => Builder<ChangePasswordDto>.CreateNew()
+                .With(_ => _.PasswordRecoverCode, passwordRecoverCode ?? Guid.NewGuid())
+                .With(_ => _.Password, password ?? "Abc1234")
+                .With(_ => _.PasswordConfirmation, passwordConfirmation ?? "Abc1234")
+                .Build();
     }
 }

@@ -95,5 +95,29 @@ namespace IdentityServer.Domain.Services
 
             return response;
         }
+
+        public async Task<Response> ChangePasswordAsync(ChangePasswordDto dto)
+        {
+            var response = Response.Create();
+
+            var user = await UserRepository.FindByPasswordRecoverCode(dto.PasswordRecoverCode);
+
+            if (!user.HasValue)
+                return response.WithBusinessError("User not found");
+
+            var changePasswordResponse = user.Value.ChangePassword(dto.PasswordRecoverCode, dto.Password, dto.PasswordConfirmation);
+
+            if (changePasswordResponse.HasError)
+                return response.WithMessages(changePasswordResponse.Messages);
+
+            await UserRepository.UpdateAsync(user);
+
+            if (!await UnitOfWork.CommitAsync())
+                return response.WithCriticalError("Failed to save new user.");
+
+            DomainEventHandler.Raise(new PasswordChangedEvent(user.Value.Adapt<PasswordChangedEventModel>()));
+
+            return response;
+        }
     }
 }
