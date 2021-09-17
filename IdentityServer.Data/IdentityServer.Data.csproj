@@ -8,4 +8,12 @@
     <PackageReference Include="Infra.BaseRepository" Version="1.0.0-pre-2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IdentityServer.Domain\IdentityServer.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
