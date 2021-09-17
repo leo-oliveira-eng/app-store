@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Infra.BaseRepository" Version="1.0.0-pre-2" />
+  </ItemGroup>
+
 </Project>
