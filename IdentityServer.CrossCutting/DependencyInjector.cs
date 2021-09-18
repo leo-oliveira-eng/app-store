@@ -8,6 +8,7 @@ using IdentityServer.Domain.Events.Contracts;
 using IdentityServer.Domain.Repositories;
 using IdentityServer.Domain.Services;
 using IdentityServer.Domain.Services.Contracts;
+using IdentityServer.ExternalServices.Services;
 using Infrastructure.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,6 +37,8 @@ namespace IdentityServer.CrossCutting
             #region Handlers
 
             services.AddScoped<IDomainEventHandler, DomainEventHandler>();
+            services.AddTransient<IHandle<RecoverPasswordEvent>, RecoverPasswordEmailService>();
+            services.AddTransient<IHandle<PasswordChangedEvent>, ChangePasswordEmailService>();
 
             #endregion
         }
