@@ -1,4 +1,6 @@
 ﻿using BaseEntity.Domain.UnitOfWork;
+using IdentityServer.Application.Services;
+using IdentityServer.Application.Services.Contracts;
 using IdentityServer.Data.Context;
 using IdentityServer.Data.Repositories;
 using IdentityServer.Domain.Events;
@@ -25,6 +27,7 @@ namespace IdentityServer.CrossCutting
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserApplicationService, UserApplicationService>();
 
             #endregion
 
