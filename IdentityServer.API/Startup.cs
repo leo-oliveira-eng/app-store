@@ -1,3 +1,4 @@
+using IdentityServer.CrossCutting.Extensions;
 using IdentityServer.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,8 @@ namespace IdentityServer.API
             services.AddControllers();
 
             services.AddDbContext<IdentityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnectionString")));
+
+            services.ConfigureDependencyInjector();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
