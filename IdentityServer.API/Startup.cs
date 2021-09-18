@@ -1,4 +1,5 @@
 using ExpressionDebugger;
+using IdentityServer.API.Services;
 using IdentityServer.CrossCutting.Extensions;
 using IdentityServer.Data.Context;
 using IdentityServer.Domain.Services.Dtos;
@@ -43,6 +44,11 @@ namespace IdentityServer.API
             services.AddSingleton(GetConfiguredMappingConfig());
 
             services.AddScoped<IMapper, ServiceMapper>();
+
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
+                .AddProfileService<ProfileService>();
         }
 
         private static TypeAdapterConfig GetConfiguredMappingConfig()
@@ -82,6 +88,8 @@ namespace IdentityServer.API
             {
                 endpoints.MapControllers();
             });
+
+            app.UseIdentityServer();
         }
     }
 }
