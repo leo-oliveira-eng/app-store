@@ -1,6 +1,10 @@
-﻿using FluentAssertions;
+﻿using BaseEntity.Domain.UnitOfWork;
+using FluentAssertions;
 using IdentityServer.Domain.Models;
+using IdentityServer.Domain.Repositories;
+using IdentityServer.Domain.Services;
 using IdentityServer.Domain.Services.Dtos;
+using IdentityServer.Domain.Tests.Shared;
 using Messages.Core;
 using Messages.Core.Enums;
 using Moq;
@@ -9,8 +13,19 @@ using Xunit;
 
 namespace IdentityServer.Domain.Tests.UserServiceTests
 {
-    public class CreateAsyncUnitTests : UserServiceUnitTests
+    public class CreateAsyncUnitTests : BaseMock
     {
+        protected readonly Mock<IUnitOfWork> _uow = new Mock<IUnitOfWork>();
+
+        protected readonly Mock<IUserRepository> _userRepository = new Mock<IUserRepository>();
+
+        protected CreateUserService UserService { get; set; }
+
+        public CreateAsyncUnitTests()
+        {
+            UserService = new CreateUserService(_userRepository.Object, _uow.Object);
+        }
+
         [Fact]
         public async Task CreateAsync_Success_ValidParametes()
         {

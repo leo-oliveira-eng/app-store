@@ -14,14 +14,14 @@ namespace IdentityServer.Application.Services
 {
     public class UserApplicationService : IUserApplicationService
     {
-        private IUserService UserService { get; }
-
         private IMapper Mapper { get; }
 
-        public UserApplicationService(IUserService userService, IMapper mapper)
+        private ICreateUserService CreateUserService { get; }
+
+        public UserApplicationService(IMapper mapper, ICreateUserService createUserService)
         {
-            UserService = userService ?? throw new ArgumentNullException(nameof(userService));
             Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            CreateUserService = createUserService ?? throw new ArgumentNullException(nameof(createUserService));
         }
 
         public async Task<Response<CreateUserResponseMessage>> CreateAsync(CreateUserRequestMessage requestMessage)
@@ -31,7 +31,7 @@ namespace IdentityServer.Application.Services
             if (requestMessage is null)
                 return response.WithBusinessError("Request data is invalid");
 
-            var createUserResponse = await UserService.CreateAsync(Mapper.Map<CreateUserDto>(requestMessage));
+            var createUserResponse = await CreateUserService.CreateAsync(Mapper.Map<CreateUserDto>(requestMessage));
 
             if (createUserResponse.HasError)
                 return response.WithMessages(createUserResponse.Messages);

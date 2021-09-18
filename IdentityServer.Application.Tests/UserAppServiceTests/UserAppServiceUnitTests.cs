@@ -10,7 +10,7 @@ namespace IdentityServer.Application.Tests.UserAppServiceTests
 {
     public class UserAppServiceUnitTests : BaseMock
     {
-        protected readonly Mock<IUserService> _userService = new Mock<IUserService>();
+        protected readonly Mock<ICreateUserService> _userService = new Mock<ICreateUserService>();
 
         protected readonly Mock<IMapper> _mapper = new Mock<IMapper>();
 
@@ -20,7 +20,7 @@ namespace IdentityServer.Application.Tests.UserAppServiceTests
         {
             var scope = MapsterConfig.CreateScope();
 
-            UserApplicationService = new UserApplicationService(_userService.Object, scope.ServiceProvider.GetService<IMapper>());
+            UserApplicationService = new UserApplicationService(scope.ServiceProvider.GetService<IMapper>(), _userService.Object);
         }
     }
 }
