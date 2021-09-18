@@ -60,5 +60,10 @@ namespace IdentityServer.Application.Tests.Shared
                 , city ?? "Rio de Janeiro"
                 , uf ?? "RJ"
                 , complement);
+
+        public RecoverPasswordRequestMessage RecoverPasswordRequestMessageFake(string cpf = null)
+            => Builder<RecoverPasswordRequestMessage>.CreateNew()
+                .With(_ => _.Cpf, cpf ?? "987.654.321-00")
+                .Build();
     }
 }

@@ -18,10 +18,15 @@ namespace IdentityServer.Application.Services
 
         private ICreateUserService CreateUserService { get; }
 
-        public UserApplicationService(IMapper mapper, ICreateUserService createUserService)
+        private IRecoverPasswordService RecoverPasswordService { get; }
+
+        public UserApplicationService(IMapper mapper
+            , ICreateUserService createUserService
+            , IRecoverPasswordService recoverPasswordService)
         {
             Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             CreateUserService = createUserService ?? throw new ArgumentNullException(nameof(createUserService));
+            RecoverPasswordService = recoverPasswordService ?? throw new ArgumentNullException(nameof(recoverPasswordService));
         }
 
         public async Task<Response<CreateUserResponseMessage>> CreateAsync(CreateUserRequestMessage requestMessage)
@@ -37,6 +42,21 @@ namespace IdentityServer.Application.Services
                 return response.WithMessages(createUserResponse.Messages);
 
             return response.SetValue(createUserResponse.Adapt<CreateUserResponseMessage>());
+        }
+
+        public async Task<Response<RecoverPasswordResponseMessage>> RecoverPasswordAsync(RecoverPasswordRequestMessage requestMessage)
+        {
+            var response = Response<RecoverPasswordResponseMessage>.Create();
+
+            if (requestMessage is null)
+                return response.WithBusinessError("Request data is invalid");
+
+            var recoverPasswordResponse = await RecoverPasswordService.RecoverPasswordAsync(requestMessage.Cpf);
+
+            if (recoverPasswordResponse.HasError)
+                return response.WithMessages(recoverPasswordResponse.Messages);
+
+            return response;
         }
     }
 }

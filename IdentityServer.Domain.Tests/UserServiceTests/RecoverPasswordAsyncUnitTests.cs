@@ -1,6 +1,11 @@
-﻿using FluentAssertions;
+﻿using BaseEntity.Domain.UnitOfWork;
+using FluentAssertions;
 using IdentityServer.Domain.Events;
+using IdentityServer.Domain.Events.Contracts;
 using IdentityServer.Domain.Models;
+using IdentityServer.Domain.Repositories;
+using IdentityServer.Domain.Services;
+using IdentityServer.Domain.Tests.Shared;
 using Messages.Core;
 using Messages.Core.Enums;
 using Moq;
@@ -9,8 +14,21 @@ using Xunit;
 
 namespace IdentityServer.Domain.Tests.UserServiceTests
 {
-    public class RecoverPasswordAsyncUnitTests : UserServiceUnitTests
+    public class RecoverPasswordAsyncUnitTests : BaseMock
     {
+        protected readonly Mock<IUnitOfWork> _uow = new Mock<IUnitOfWork>();
+
+        protected readonly Mock<IUserRepository> _userRepository = new Mock<IUserRepository>();
+
+        protected readonly Mock<IDomainEventHandler> _domainEventHandler = new Mock<IDomainEventHandler>();
+
+        protected RecoverPasswordService UserService { get; set; }
+
+        public RecoverPasswordAsyncUnitTests()
+        {
+            UserService = new RecoverPasswordService(_userRepository.Object, _uow.Object, _domainEventHandler.Object);
+        }
+
         [Fact]
         public async Task RecoverPassword_Success_ValidParameters()
         {

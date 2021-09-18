@@ -14,13 +14,17 @@ namespace IdentityServer.Application.Tests.UserAppServiceTests
 
         protected readonly Mock<IMapper> _mapper = new Mock<IMapper>();
 
+        protected readonly Mock<IRecoverPasswordService> _recoverPasswordService = new Mock<IRecoverPasswordService>();
+
         protected UserApplicationService UserApplicationService { get; set; }
 
         public UserAppServiceUnitTests()
         {
             var scope = MapsterConfig.CreateScope();
 
-            UserApplicationService = new UserApplicationService(scope.ServiceProvider.GetService<IMapper>(), _userService.Object);
+            UserApplicationService = new UserApplicationService(scope.ServiceProvider.GetService<IMapper>()
+                , _userService.Object
+                , _recoverPasswordService.Object);
         }
     }
 }

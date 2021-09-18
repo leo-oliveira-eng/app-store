@@ -29,6 +29,7 @@ namespace IdentityServer.CrossCutting
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserApplicationService, UserApplicationService>();
             services.AddTransient<ICreateUserService, CreateUserService>();
+            services.AddTransient<IRecoverPasswordService, RecoverPasswordService>();
 
             #endregion
 
