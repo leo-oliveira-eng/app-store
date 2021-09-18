@@ -21,7 +21,7 @@ namespace IdentityServer.Domain.Tests.UserServiceTests
 
         #region Properties
 
-        protected UserService UserService { get; set; }
+        protected ChangePasswordService UserService { get; set; }
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace IdentityServer.Domain.Tests.UserServiceTests
 
         public UserServiceUnitTests()
         {
-            UserService = new UserService(_userRepository.Object, _uow.Object, _domainEventHandler.Object);
+            UserService = new ChangePasswordService(_userRepository.Object, _uow.Object, _domainEventHandler.Object);
         }
 
         #endregion

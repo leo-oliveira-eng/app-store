@@ -65,5 +65,13 @@ namespace IdentityServer.Application.Tests.Shared
             => Builder<RecoverPasswordRequestMessage>.CreateNew()
                 .With(_ => _.Cpf, cpf ?? "987.654.321-00")
                 .Build();
+
+        public ChangePasswordRequestMessage ChangePasswordRequestMessageFake(Guid? passwordRecoverCode = null, string password = null,
+            string passwordConfirmation = null)
+            => Builder<ChangePasswordRequestMessage>.CreateNew()
+                .With(_ => _.PasswordRecoverCode, passwordRecoverCode ?? Guid.NewGuid())
+                .With(_ => _.Password, password ?? "Abc1234")
+                .With(_ => _.PasswordConfirmation, passwordConfirmation ?? "Abc1234")
+                .Build();
     }
 }

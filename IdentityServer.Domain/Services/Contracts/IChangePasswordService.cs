@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer.Domain.Services.Contracts
 {
-    public interface IUserService
+    public interface IChangePasswordService
     {
         Task<Response> ChangePasswordAsync(ChangePasswordDto dto);
     }

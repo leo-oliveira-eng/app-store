@@ -16,6 +16,8 @@ namespace IdentityServer.Application.Tests.UserAppServiceTests
 
         protected readonly Mock<IRecoverPasswordService> _recoverPasswordService = new Mock<IRecoverPasswordService>();
 
+        protected readonly Mock<IChangePasswordService> _changePasswordService = new Mock<IChangePasswordService>();
+
         protected UserApplicationService UserApplicationService { get; set; }
 
         public UserAppServiceUnitTests()
@@ -24,7 +26,8 @@ namespace IdentityServer.Application.Tests.UserAppServiceTests
 
             UserApplicationService = new UserApplicationService(scope.ServiceProvider.GetService<IMapper>()
                 , _userService.Object
-                , _recoverPasswordService.Object);
+                , _recoverPasswordService.Object
+                , _changePasswordService.Object);
         }
     }
 }

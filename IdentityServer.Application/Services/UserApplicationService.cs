@@ -20,13 +20,17 @@ namespace IdentityServer.Application.Services
 
         private IRecoverPasswordService RecoverPasswordService { get; }
 
+        private IChangePasswordService ChangePasswordService { get; }
+
         public UserApplicationService(IMapper mapper
             , ICreateUserService createUserService
-            , IRecoverPasswordService recoverPasswordService)
+            , IRecoverPasswordService recoverPasswordService
+            , IChangePasswordService changePasswordService)
         {
             Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             CreateUserService = createUserService ?? throw new ArgumentNullException(nameof(createUserService));
             RecoverPasswordService = recoverPasswordService ?? throw new ArgumentNullException(nameof(recoverPasswordService));
+            ChangePasswordService = changePasswordService ?? throw new ArgumentNullException(nameof(changePasswordService));
         }
 
         public async Task<Response<CreateUserResponseMessage>> CreateAsync(CreateUserRequestMessage requestMessage)
@@ -55,6 +59,21 @@ namespace IdentityServer.Application.Services
 
             if (recoverPasswordResponse.HasError)
                 return response.WithMessages(recoverPasswordResponse.Messages);
+
+            return response;
+        }
+
+        public async Task<Response<ChangePasswordResponseMessage>> ChangePasswordAsync(ChangePasswordRequestMessage requestMessage)
+        {
+            var response = Response<ChangePasswordResponseMessage>.Create();
+
+            if (requestMessage is null)
+                return response.WithBusinessError("Request data is invalid");
+
+            var changePasswordResponse = await ChangePasswordService.ChangePasswordAsync(requestMessage.Adapt<ChangePasswordDto>());
+
+            if (changePasswordResponse.HasError)
+                return response.WithMessages(changePasswordResponse.Messages);
 
             return response;
         }

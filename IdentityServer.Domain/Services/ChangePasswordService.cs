@@ -10,11 +10,10 @@ using Messages.Core;
 using Messages.Core.Extensions;
 using System;
 using System.Threading.Tasks;
-using Valuables.Utils;
 
 namespace IdentityServer.Domain.Services
 {
-    public class UserService : IUserService
+    public class ChangePasswordService : IChangePasswordService
     {
         private IUserRepository UserRepository { get; }
 
@@ -22,12 +21,12 @@ namespace IdentityServer.Domain.Services
 
         private IDomainEventHandler DomainEventHandler { get; }
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IDomainEventHandler domainEventHandler)
+        public ChangePasswordService(IUserRepository userRepository, IUnitOfWork unitOfWork, IDomainEventHandler domainEventHandler)
         {
             UserRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             DomainEventHandler = domainEventHandler ?? throw new ArgumentNullException(nameof(domainEventHandler));
-        }        
+        }
 
         public async Task<Response> ChangePasswordAsync(ChangePasswordDto dto)
         {
