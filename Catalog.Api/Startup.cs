@@ -33,11 +33,15 @@ namespace Catalog.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureCors(Configuration);
+
             services.AddControllers();
 
             services.AddHealthChecks().AddMongoDb(Configuration["ConnectionString"]);
 
             services.AddTransient<ExceptionHandlingMiddleware>();
+
+            services.AddSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -45,6 +49,12 @@ namespace Catalog.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger().UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "App Store - Identity Server");
+                    c.RoutePrefix = string.Empty;
+                });
             }
 
             loggerFactory.AddSerilog();
