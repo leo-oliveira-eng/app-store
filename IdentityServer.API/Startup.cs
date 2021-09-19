@@ -1,5 +1,5 @@
-using ExpressionDebugger;
 using IdentityServer.API.Extensions;
+using IdentityServer.API.Middlewares;
 using IdentityServer.API.Services;
 using IdentityServer.CrossCutting.Extensions;
 using IdentityServer.Data.Context;
@@ -12,7 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq.Expressions;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using System;
 using Valuables.Utils;
 
 namespace IdentityServer.API
@@ -22,6 +25,16 @@ namespace IdentityServer.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            var elasticUri = Configuration["ElasticConfiguration:Uri"];
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUri))
+                {
+                    AutoRegisterTemplate = true,
+                })
+            .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -48,9 +61,11 @@ namespace IdentityServer.API
             services.AddSingleton(GetConfiguredMappingConfig());
 
             services.AddScoped<IMapper, ServiceMapper>();
+
+            services.AddTransient<ExceptionHandlingMiddleware>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -62,6 +77,10 @@ namespace IdentityServer.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "App Store - Identity Server");
                 c.RoutePrefix = string.Empty;
             });
+
+            loggerFactory.AddSerilog();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseCors("CorsPolicy");
 
