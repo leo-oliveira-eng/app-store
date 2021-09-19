@@ -56,6 +56,8 @@ namespace IdentityServer.API
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 .AddProfileService<ProfileService>();
 
+            services.AddHealthChecks().AddSqlServer(Configuration.GetConnectionString("IdentityConnectionString"));
+
             services.AddSwagger();
 
             services.AddSingleton(GetConfiguredMappingConfig());
@@ -78,6 +80,10 @@ namespace IdentityServer.API
                 c.RoutePrefix = string.Empty;
             });
 
+            app.UseRouting();
+
+            app.UseHealthChecksConfig();
+
             loggerFactory.AddSerilog();
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -85,8 +91,6 @@ namespace IdentityServer.API
             app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
-
-            app.UseRouting();
 
             app.UseAuthorization();
 
