@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Http.Request.Service" Version="1.0.0-preview-1" />
+    <PackageReference Include="Mapster" Version="7.2.0" />
+  </ItemGroup>
+
+</Project>

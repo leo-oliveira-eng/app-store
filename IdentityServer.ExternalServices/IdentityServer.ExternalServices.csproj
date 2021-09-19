@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IdentityServer.Domain\IdentityServer.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

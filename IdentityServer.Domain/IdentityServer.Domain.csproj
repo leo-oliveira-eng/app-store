@@ -4,4 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BaseEntity.Domain" Version="1.0.0-pre-6" />
+    <PackageReference Include="IdentityServer4" Version="2.4.0" />
+    <PackageReference Include="Mapster" Version="7.2.0" />
+    <PackageReference Include="Valuables.Utils" Version="1.0.0-pre-2" />
+  </ItemGroup>
+
 </Project>
