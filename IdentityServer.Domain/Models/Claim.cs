@@ -16,6 +16,8 @@ namespace IdentityServer.Domain.Models
 
         public ICollection<UserClaim> Users { get; set; } = new HashSet<UserClaim>();
 
+        public ICollection<ClientClaim> Clients { get; private set; } = new HashSet<ClientClaim>();
+
         #endregion
 
         #region Constructors

@@ -38,6 +38,8 @@ namespace IdentityServer.API
 
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
+                .AddResourceStore<ResourceStore>()
+                .AddClientStore<ClientStore>()
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 .AddProfileService<ProfileService>();
 
@@ -54,6 +56,12 @@ namespace IdentityServer.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger().UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "App Store - Identity Server");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseCors("CorsPolicy");
 

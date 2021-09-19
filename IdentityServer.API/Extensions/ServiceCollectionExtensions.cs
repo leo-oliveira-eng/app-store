@@ -19,7 +19,8 @@ namespace IdentityServer.API.Extensions
             serviceCollection.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyHeader()
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()
                     .WithOrigins(allowedHosts));
@@ -28,10 +29,10 @@ namespace IdentityServer.API.Extensions
 
         public static void AddSwagger(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSwaggerGen(c =>
+            serviceCollection.AddSwaggerGen(options =>
             {
-                c.CustomSchemaIds(x => x.FullName);
-                c.SwaggerDoc("v1", new OpenApiInfo
+                options.CustomSchemaIds(x => x.FullName);
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "App Store - Identity Server",
                     Contact = new OpenApiContact

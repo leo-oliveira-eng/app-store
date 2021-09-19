@@ -41,6 +41,18 @@ namespace IdentityServer.CrossCutting
             services.AddTransient<IHandle<PasswordChangedEvent>, ChangePasswordEmailService>();
 
             #endregion
+
+            #region Client
+
+            services.AddTransient<IClientRepository, ClientRepository>();
+
+            #endregion
+
+            #region Resource
+
+            services.AddTransient<IResourceRepository, ResourceRepository>();
+
+            #endregion
         }
     }
 }
