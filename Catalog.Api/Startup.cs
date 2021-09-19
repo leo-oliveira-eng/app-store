@@ -1,3 +1,4 @@
+using Catalog.Api.Extensions;
 using Catalog.Api.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,10 @@ namespace Catalog.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddHealthChecks().AddMongoDb(Configuration["ConnectionString"]);
+
+            services.AddTransient<ExceptionHandlingMiddleware>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -49,6 +54,8 @@ namespace Catalog.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseHealthChecksConfig();
 
             app.UseAuthorization();
 
