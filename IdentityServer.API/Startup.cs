@@ -72,13 +72,13 @@ namespace IdentityServer.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
 
-            app.UseSwagger().UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "App Store - Identity Server");
-                c.RoutePrefix = string.Empty;
-            });
+                app.UseSwagger().UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "App Store - Identity Server");
+                    c.RoutePrefix = string.Empty;
+                });
+            }
 
             app.UseRouting();
 
