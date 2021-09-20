@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.2.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.13.1" />
   </ItemGroup>
 
@@ -15,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="App\Documents\" />
-    <Folder Include="Author\Documents\" />
   </ItemGroup>
 
 </Project>

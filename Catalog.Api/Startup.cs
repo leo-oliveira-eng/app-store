@@ -1,5 +1,7 @@
 using Catalog.Api.Extensions;
 using Catalog.Api.Middlewares;
+using Catalog.CrossCutting.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using System;
+using System.Reflection;
 
 namespace Catalog.Api
 {
@@ -36,6 +39,10 @@ namespace Catalog.Api
             services.ConfigureCors(Configuration);
 
             services.AddControllers();
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.ConfigureDependencyInjector();
 
             services.AddHealthChecks().AddMongoDb(Configuration["MongoDB:ConnectionString"]);
 
