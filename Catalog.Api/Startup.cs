@@ -37,7 +37,7 @@ namespace Catalog.Api
 
             services.AddControllers();
 
-            services.AddHealthChecks().AddMongoDb(Configuration["ConnectionString"]);
+            services.AddHealthChecks().AddMongoDb(Configuration["MongoDB:ConnectionString"]);
 
             services.AddTransient<ExceptionHandlingMiddleware>();
 
