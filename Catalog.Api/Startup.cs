@@ -1,5 +1,6 @@
 using Catalog.Api.Extensions;
 using Catalog.Api.Middlewares;
+using Catalog.Common.Configurations;
 using Catalog.CrossCutting.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -43,6 +44,8 @@ namespace Catalog.Api
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.ConfigureDependencyInjector();
+
+            services.Configure<MongoDbConfiguration>(options => Configuration.GetSection("MongoDB").Bind(options));
 
             services.AddHealthChecks().AddMongoDb(Configuration["MongoDB:ConnectionString"]);
 

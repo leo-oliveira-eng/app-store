@@ -19,6 +19,7 @@ namespace Catalog.Application.Authors.Services
         public AuthorApplicationService(IMediatorHandler mediator)
         {
             Mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            TypeAdapterConfig.GlobalSettings.Default.NameMatchingStrategy(NameMatchingStrategy.IgnoreCase);
         }
 
         public async Task<Response<CreateAuthorResponseMessage>> CreateAsync(CreateAuthorRequestMessage requestMessage)
