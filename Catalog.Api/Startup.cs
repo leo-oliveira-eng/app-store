@@ -1,14 +1,10 @@
-using IdentityServer.API.Extensions;
-using IdentityServer.API.Middlewares;
-using IdentityServer.API.Services;
-using IdentityServer.CrossCutting.Extensions;
-using IdentityServer.Data.Context;
-using IdentityServer.Messaging.Requests;
-using Mapster;
-using MapsterMapper;
+using Catalog.Api.Extensions;
+using Catalog.Api.Middlewares;
+using Catalog.Common.Configurations;
+using Catalog.CrossCutting.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,9 +12,9 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using System;
-using Valuables.Utils;
+using System.Reflection;
 
-namespace IdentityServer.API
+namespace Catalog.Api
 {
     public class Startup
     {
@@ -45,26 +41,17 @@ namespace IdentityServer.API
 
             services.AddControllers();
 
-            services.AddDbContext<IdentityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnectionString")));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.ConfigureDependencyInjector();
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddResourceStore<ResourceStore>()
-                .AddClientStore<ClientStore>()
-                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
-                .AddProfileService<ProfileService>();
+            services.Configure<MongoDbConfiguration>(options => Configuration.GetSection("MongoDB").Bind(options));
 
-            services.AddHealthChecks().AddSqlServer(Configuration.GetConnectionString("IdentityConnectionString"));
-
-            services.AddSwagger();
-
-            services.AddSingleton(GetConfiguredMappingConfig());
-
-            services.AddScoped<IMapper, ServiceMapper>();
+            services.AddHealthChecks().AddMongoDb(Configuration["MongoDB:ConnectionString"]);
 
             services.AddTransient<ExceptionHandlingMiddleware>();
+
+            services.AddSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -80,17 +67,15 @@ namespace IdentityServer.API
                 });
             }
 
-            app.UseRouting();
-
-            app.UseHealthChecksConfig();
-
             loggerFactory.AddSerilog();
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-            app.UseCors("CorsPolicy");
-
             app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseHealthChecksConfig();
 
             app.UseAuthorization();
 
@@ -98,20 +83,6 @@ namespace IdentityServer.API
             {
                 endpoints.MapControllers();
             });
-
-            app.UseIdentityServer();
-        }
-
-        public static TypeAdapterConfig GetConfiguredMappingConfig()
-        {
-            var config = new TypeAdapterConfig();
-
-            config.NewConfig<CreateAddressRequestMessage, Address>()
-                .IgnoreNullValues(true)
-                .ConstructUsing(src => Address.Create(src.Cep, src.Street, src.Neighborhood, src.Number, src.City, src.UF, src.Complement).Data.Value)
-                .Compile();
-
-            return config;
         }
     }
 }

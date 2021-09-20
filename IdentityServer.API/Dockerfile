@@ -1,20 +1,28 @@
-FROM mcr.microsoft.com/dotnet/sdk:3.1 as build
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
-COPY /IdentityServer.API.csproj /app/IdentityServer.API.csproj
-
-RUN dotnet restore
-
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+COPY ["IdentityServer.API/IdentityServer.API.csproj", "IdentityServer.API/"]
+COPY ["IdentityServer.Data/IdentityServer.Data.csproj", "IdentityServer.Data/"]
+COPY ["IdentityServer.Domain/IdentityServer.Domain.csproj", "IdentityServer.Domain/"]
+COPY ["IdentityServer.CrossCutting/IdentityServer.CrossCutting.csproj", "IdentityServer.CrossCutting/"]
+COPY ["IdentityServer.ExternalServices/IdentityServer.ExternalServices.csproj", "IdentityServer.ExternalServices/"]
+COPY ["IdentityServer.Application/IdentityServer.Application.csproj", "IdentityServer.Application/"]
+COPY ["IdentityServer.Messaging/IdentityServer.Messaging.csproj", "IdentityServer.Messaging/"]
+RUN dotnet restore "IdentityServer.API/IdentityServer.API.csproj"
 COPY . .
+WORKDIR "/src/IdentityServer.API"
+RUN dotnet build "IdentityServer.API.csproj" -c Release -o /app/build
 
-RUN dotnet build \
-    && dotnet publish -c Release -o /build --no-restore
+FROM build AS publish
+RUN dotnet publish "IdentityServer.API.csproj" -c Release -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:3.1
-
+FROM base AS final
 WORKDIR /app
-
-COPY --from=build /build ./
-
-ENTRYPOINT ["dotnet", "./IdentityServer.API.dll"]
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "IdentityServer.API.dll"]
