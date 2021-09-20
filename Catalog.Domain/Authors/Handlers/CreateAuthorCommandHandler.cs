@@ -32,9 +32,9 @@ namespace Catalog.Domain.Authors.Handlers
             var author = new Author(command.Name, command.CNPJ, command.PhoneNumber, command.Email,
                 command.WebSite, command.BrandLogo);
 
-            await AuthorRepository.AddAsync(author);
-
             author.AddDomainEvent(new AuthorCreatedEvent(author));
+
+            await AuthorRepository.AddAsync(author);            
 
             return response.SetValue(author);
         }
