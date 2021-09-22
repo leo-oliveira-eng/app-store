@@ -13,5 +13,7 @@ namespace Catalog.Application.Authors.Contracts
         Task<Response<AuthorResponseMessage>> UpdateAsync(UpdateAuthorRequestMessage requestMessage, Guid id);
 
         Task<Response<AuthorResponseMessage>> FindAsync(Guid id);
+
+        Task<Response<DeleteAuthorResponseMessage>> DeleteAsync(Guid id);
     }
 }

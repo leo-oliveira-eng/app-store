@@ -70,5 +70,12 @@ namespace Catalog.Application.Authors.Services
 
             return author.Value.Adapt<AuthorResponseMessage>();
         }
+
+        public async Task<Response<DeleteAuthorResponseMessage>> DeleteAsync(Guid id)
+        {
+            var deleteAuthorResponse = await Mediator.SendCommand<DeleteAuthorCommand, Response>(new DeleteAuthorCommand(id));
+
+            return Response<DeleteAuthorResponseMessage>.Create().WithMessages(deleteAuthorResponse.Messages);
+        }
     }
 }

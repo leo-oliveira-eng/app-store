@@ -29,5 +29,9 @@ namespace Catalog.Api.Controllers
         [HttpGet, Route("{id}"), RequiredId]
         public async Task<IActionResult> FindAsync(Guid id)
             => await WithResponseAsync(() => AuthorApplicationService.FindAsync(id));
+
+        [HttpDelete, Route("{id}"), RequiredId]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+            => await WithResponseAsync(() => AuthorApplicationService.DeleteAsync(id));
     }
 }

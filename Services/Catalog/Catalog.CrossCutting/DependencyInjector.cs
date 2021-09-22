@@ -22,10 +22,6 @@ namespace Catalog.CrossCutting
     {
         public static void Configure(IServiceCollection services)
         {
-            #region Domain - Commands
-
-            #endregion
-
             #region Data
 
             services.AddScoped<IAuthorRepository, AuthorRepository>();
@@ -38,6 +34,7 @@ namespace Catalog.CrossCutting
 
             services.AddScoped<IRequestHandler<CreateAuthorCommand, Response<Author>>, CreateAuthorCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateAuthorCommand, Response<Author>>, UpdateAuthorCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteAuthorCommand, Response>, DeleteAuthorCommandHandler>();
             services.AddScoped<IMediatorHandler, InMemoryBus>();
             services.AddScoped<INotificationHandler<AuthorCreatedEvent>, AuthorCreatedEventHandler>();
 

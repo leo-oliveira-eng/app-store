@@ -1,6 +1,7 @@
 ﻿using Catalog.Domain.Authors.Commands;
 using Catalog.Domain.Authors.Models;
 using FizzWare.NBuilder;
+using System;
 
 namespace Catalog.Domain.Tests.Shared
 {
@@ -28,5 +29,8 @@ namespace Catalog.Domain.Tests.Shared
 
         public Author AuthorFake()
             => Builder<Author>.CreateNew().Build();
+
+        public DeleteAuthorCommand DeleteAuthorCommandFake(Guid? id = null)
+            => new DeleteAuthorCommand(id ?? Guid.NewGuid());
     }
 }
