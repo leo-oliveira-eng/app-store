@@ -29,29 +29,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-ExternalServices", "05-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.API", "IdentityServer.API\IdentityServer.API.csproj", "{B9B98F5A-E73D-46F7-90CC-D61E87FE3B6D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Application", "IdentityServer.Application\IdentityServer.Application.csproj", "{76FDF0F3-9362-4E41-99AD-02BD7319BE4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Application", "Services\IdentityServer\IdentityServer.Application\IdentityServer.Application.csproj", "{76FDF0F3-9362-4E41-99AD-02BD7319BE4F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Domain", "IdentityServer.Domain\IdentityServer.Domain.csproj", "{2FBFE84C-2A1F-4278-AAC2-8C838F0D16B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Domain", "Services\IdentityServer\IdentityServer.Domain\IdentityServer.Domain.csproj", "{2FBFE84C-2A1F-4278-AAC2-8C838F0D16B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.CrossCutting", "IdentityServer.CrossCutting\IdentityServer.CrossCutting.csproj", "{0D010393-DDEE-41E4-B651-FEA96E39DB4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.CrossCutting", "Services\IdentityServer\IdentityServer.CrossCutting\IdentityServer.CrossCutting.csproj", "{0D010393-DDEE-41E4-B651-FEA96E39DB4E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Data", "IdentityServer.Data\IdentityServer.Data.csproj", "{A6B3C094-6D76-424E-BD98-B41DF7A79668}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Data", "Services\IdentityServer\IdentityServer.Data\IdentityServer.Data.csproj", "{A6B3C094-6D76-424E-BD98-B41DF7A79668}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.ExternalServices", "IdentityServer.ExternalServices\IdentityServer.ExternalServices.csproj", "{8ECB2951-32CC-4CDC-93B5-5EA1068EF460}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.ExternalServices", "Services\IdentityServer\IdentityServer.ExternalServices\IdentityServer.ExternalServices.csproj", "{8ECB2951-32CC-4CDC-93B5-5EA1068EF460}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Domain.SharedKernel", "IdentityServer.Domain.SharedKernel\IdentityServer.Domain.SharedKernel.csproj", "{D62F29AA-A742-4DCD-B7C2-861987D1B2E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Domain.SharedKernel", "Services\IdentityServer\IdentityServer.Domain.SharedKernel\IdentityServer.Domain.SharedKernel.csproj", "{D62F29AA-A742-4DCD-B7C2-861987D1B2E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{04F06BE3-87A4-42E7-B9A7-03F3D46E1026}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Domain.Tests", "IdentityServer.Domain.Tests\IdentityServer.Domain.Tests.csproj", "{9F926C16-3B6B-495B-980D-A9D688C4E449}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Domain.Tests", "Services\IdentityServer\IdentityServer.Domain.Tests\IdentityServer.Domain.Tests.csproj", "{9F926C16-3B6B-495B-980D-A9D688C4E449}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FFEBB5A1-9B8C-4797-8132-10D5846B6D34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Application.Tests", "IdentityServer.Application.Tests\IdentityServer.Application.Tests.csproj", "{7BB6A92C-1E65-40E3-94B7-8BFB0985F1C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Application.Tests", "Services\IdentityServer\IdentityServer.Application.Tests\IdentityServer.Application.Tests.csproj", "{7BB6A92C-1E65-40E3-94B7-8BFB0985F1C8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00-Messaging", "00-Messaging", "{786F9276-7229-4717-B7A4-2A6B2F93E10D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Messaging", "IdentityServer.Messaging\IdentityServer.Messaging.csproj", "{6DC2DD94-1015-4884-9689-E93CE3587D10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Messaging", "Services\IdentityServer\IdentityServer.Messaging\IdentityServer.Messaging.csproj", "{6DC2DD94-1015-4884-9689-E93CE3587D10}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2A33685B-E025-4B24-A790-20D89B980A96}"
 EndProject
@@ -63,31 +63,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Domain", "03-Domain", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Infrastructure", "04-Infrastructure", "{BE88458E-AA6D-4776-9B5A-57A8D40F4AD0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Api", "Catalog.Api\Catalog.Api.csproj", "{8C9A5157-16C3-48B6-BD05-FEC030425577}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Api", "Services\Catalog\Catalog.Api\Catalog.Api.csproj", "{8C9A5157-16C3-48B6-BD05-FEC030425577}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Application", "Catalog.Application\Catalog.Application.csproj", "{CC72A380-1BD5-4D65-A424-6FFB335DBC86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Application", "Services\Catalog\Catalog.Application\Catalog.Application.csproj", "{CC72A380-1BD5-4D65-A424-6FFB335DBC86}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domain", "Catalog.Domain\Catalog.Domain.csproj", "{69B7574B-4B5A-4FF1-B05E-5C6727703C11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domain", "Services\Catalog\Catalog.Domain\Catalog.Domain.csproj", "{69B7574B-4B5A-4FF1-B05E-5C6727703C11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Infrastructure", "Catalog.Infrastructure\Catalog.Infrastructure.csproj", "{1699A7A8-41BA-4434-AEC8-8D6F661EE97A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Infrastructure", "Services\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj", "{1699A7A8-41BA-4434-AEC8-8D6F661EE97A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-Common", "05-Common", "{F438D069-43A3-4D6E-BF48-D6E042651FA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Common", "Catalog.Common\Catalog.Common.csproj", "{C58D90D3-9F1E-4EA0-AA07-882A73D3808C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Common", "Services\Catalog\Catalog.Common\Catalog.Common.csproj", "{C58D90D3-9F1E-4EA0-AA07-882A73D3808C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AC0D620E-E702-47E3-9EB5-04E35A3E2C11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domain.Tests", "Catalog.Domain.Tests\Catalog.Domain.Tests.csproj", "{2C9791F0-6AB9-4241-99D1-92F1477C95F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domain.Tests", "Services\Catalog\Catalog.Domain.Tests\Catalog.Domain.Tests.csproj", "{2C9791F0-6AB9-4241-99D1-92F1477C95F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.CrossCutting", "Catalog.CrossCutting\Catalog.CrossCutting.csproj", "{1C0F7FA9-30A7-4393-BC2E-53A53B7F292E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.CrossCutting", "Services\Catalog\Catalog.CrossCutting\Catalog.CrossCutting.csproj", "{1C0F7FA9-30A7-4393-BC2E-53A53B7F292E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00-Messaging", "00-Messaging", "{3C3F1487-03F0-4B10-A523-B982019487E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Messages", "Catalog.Messages\Catalog.Messages.csproj", "{FA96288C-72DF-4EEE-82AA-14E0608FC526}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Messages", "Services\Catalog\Catalog.Messages\Catalog.Messages.csproj", "{FA96288C-72DF-4EEE-82AA-14E0608FC526}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{205A98BF-8EFC-49FD-AA9C-D2D7AF3F5F5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Application.Tests", "Catalog.Application.Tests\Catalog.Application.Tests.csproj", "{F6625E7D-E305-4548-B643-ED8066F13664}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services\Catalog\Catalog.Application.Tests", "Services\Catalog\Catalog.Application.Tests\Catalog.Application.Tests.csproj", "{F6625E7D-E305-4548-B643-ED8066F13664}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
