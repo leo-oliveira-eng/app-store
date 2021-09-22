@@ -8,6 +8,7 @@
     <PackageReference Include="BaseEntity.Domain" Version="1.0.0-pre-6" />
     <PackageReference Include="Infra.BaseRepository" Version="1.0.0-pre-3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.1" />
     <PackageReference Include="Valuables.Utils" Version="1.0.0-pre-2" />
   </ItemGroup>
 

@@ -13,7 +13,7 @@ namespace Catalog.Domain.Authors.Handlers
 {
     public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommand, Response<Author>>
     {
-        IAuthorRepository AuthorRepository { get; }
+        private IAuthorRepository AuthorRepository { get; }
 
         public CreateAuthorCommandHandler(IAuthorRepository authorRepository)
         {
@@ -34,7 +34,7 @@ namespace Catalog.Domain.Authors.Handlers
 
             author.AddDomainEvent(new AuthorCreatedEvent(author));
 
-            await AuthorRepository.AddAsync(author);            
+            await AuthorRepository.AddAsync(author);
 
             return response.SetValue(author);
         }

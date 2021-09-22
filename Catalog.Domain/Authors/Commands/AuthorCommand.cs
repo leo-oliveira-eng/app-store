@@ -27,10 +27,10 @@ namespace Catalog.Domain.Authors.Commands
             if (string.IsNullOrWhiteSpace(PhoneNumber))
                 response.WithBusinessError(nameof(PhoneNumber), $"{nameof(PhoneNumber)} is invalid");
 
-            if (!string.IsNullOrWhiteSpace(WebSite) && !Uri.TryCreate(WebSite, UriKind.Absolute, out _))
+            if (string.IsNullOrWhiteSpace(WebSite) || !Uri.TryCreate(WebSite, UriKind.Absolute, out _))
                 response.WithBusinessError(nameof(WebSite), $"{nameof(WebSite)} is invalid");
 
-            if (!string.IsNullOrWhiteSpace(BrandLogo) && !Uri.TryCreate(BrandLogo, UriKind.Absolute, out _))
+            if (string.IsNullOrWhiteSpace(BrandLogo) || !Uri.TryCreate(BrandLogo, UriKind.Absolute, out _))
                 response.WithBusinessError(nameof(BrandLogo), $"{nameof(BrandLogo)} is invalid");
 
             return response;

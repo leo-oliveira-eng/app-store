@@ -1,10 +1,7 @@
 ﻿using Catalog.Domain.Authors.Models;
-using System.Threading.Tasks;
+using Catalog.Domain.Common.Repositories;
 
 namespace Catalog.Domain.Authors.Repositories
 {
-    public interface IAuthorRepository
-    {
-        Task AddAsync(Author author);
-    }
+    public interface IAuthorRepository : IRepository<Author> { }
 }

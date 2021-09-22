@@ -5,8 +5,8 @@ using Microsoft.Extensions.Options;
 
 namespace Catalog.Infrastructure.App.Repositories
 {
-    public class AppRepository : MongoDbBaseRepository, IAppRepository
+    public class AppRepository //: MongoDbBaseRepository, IAppRepository
     {
-        public AppRepository(IOptions<MongoDbConfiguration> mongoDbConfiguration) : base(mongoDbConfiguration) { }
+        //public AppRepository(IOptions<MongoDbConfiguration> mongoDbConfiguration) : base(mongoDbConfiguration) { }
     }
 }

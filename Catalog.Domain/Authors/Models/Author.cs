@@ -1,4 +1,5 @@
 ﻿using Catalog.Domain.Common;
+using Messages.Core;
 
 namespace Catalog.Domain.Authors.Models
 {
@@ -27,5 +28,9 @@ namespace Catalog.Domain.Authors.Models
             WebSite = webSite;
             BrandLogo = brandLogo;
         }
+
+        public static implicit operator Author(Maybe<Author> entity) => entity.Value;
+
+        public static implicit operator Author(Response<Author> entity) => entity.Data;
     }
 }
