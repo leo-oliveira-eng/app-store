@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Catalog.Api.Filters
 {
-    public class RequiredCodeFilter : IAsyncActionFilter
+    public class RequiredIdFilter : IAsyncActionFilter
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var code = GetCodeFromPath(context.HttpContext.Request.Path);
+            var id = GetCodeFromPath(context.HttpContext.Request.Path);
 
-            if (string.IsNullOrEmpty(code))
-                context.Result = new BadRequestObjectResult("code is invalid");
+            if (string.IsNullOrEmpty(id))
+                context.Result = new BadRequestObjectResult("Id is invalid");
 
-            context.ActionArguments["code"] = Guid.Parse(code);
+            context.ActionArguments["id"] = Guid.Parse(id);
 
             await next();
         }

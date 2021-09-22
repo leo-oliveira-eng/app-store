@@ -11,6 +11,7 @@ using Catalog.Domain.Authors.Repositories;
 using Catalog.Infrastructure.Author.Repositories;
 using Catalog.Infrastructure.Context;
 using Catalog.Infrastructure.Context.Contracts;
+using Catalog.Infrastructure.Mappings;
 using MediatR;
 using Messages.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,7 @@ namespace Catalog.CrossCutting
 
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IMongoContext, MongoContext>();
+            EntityMapping.MapEntity();
 
             #endregion
 

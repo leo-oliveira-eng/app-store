@@ -5,10 +5,10 @@ using System.Runtime.Serialization;
 namespace Catalog.Messages.Responses
 {
     [DataContract]
-    public class CreateAuthorResponseMessage : ResponseMessage
+    public class AuthorResponseMessage : ResponseMessage
     {
         [DataMember]
-        public Guid Code { get; set; }
+        public Guid Id { get; set; }
 
         [DataMember]
         public string Name { get; set; }

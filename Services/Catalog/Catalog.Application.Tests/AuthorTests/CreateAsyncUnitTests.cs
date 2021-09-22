@@ -26,7 +26,7 @@ namespace Catalog.Application.Tests.AuthorTests
             response.HasError.Should().BeFalse();
             response.Messages.Should().BeEmpty();
             response.Data.HasValue.Should().BeTrue();
-            response.Data.Value.Should().BeOfType(typeof(CreateAuthorResponseMessage));
+            response.Data.Value.Should().BeOfType(typeof(AuthorResponseMessage));
             _mediator.Verify();
         }
 

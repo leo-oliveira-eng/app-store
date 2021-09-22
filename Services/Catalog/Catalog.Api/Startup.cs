@@ -54,7 +54,7 @@ namespace Catalog.Api
 
             services.AddSwagger();
 
-            services.AddScoped<RequiredCodeFilter>();
+            services.AddScoped<RequiredIdFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)

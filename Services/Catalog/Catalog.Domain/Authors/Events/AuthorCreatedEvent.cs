@@ -6,7 +6,7 @@ namespace Catalog.Domain.Authors.Events
     public class AuthorCreatedEvent : DomainEvent
     {
         public AuthorCreatedEvent(Author model)
-            : base(model.Code)
+            : base(model.Id)
         {
             Author = model;
         }

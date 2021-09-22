@@ -6,6 +6,7 @@ using Messages.Core;
 using Messages.Core.Enums;
 using Messages.Core.Extensions;
 using Moq;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -20,13 +21,13 @@ namespace Catalog.Application.Tests.AuthorTests
                 .ReturnsAsync(Response<Author>.Create(AuthorFake()))
                 .Verifiable();
 
-            var response = await AuthorApplicationService.UpdateAsync(UpdateAuthorRequestMessageFake());
+            var response = await AuthorApplicationService.UpdateAsync(UpdateAuthorRequestMessageFake() ,Guid.NewGuid());
 
             response.Should().NotBeNull();
             response.HasError.Should().BeFalse();
             response.Messages.Should().BeEmpty();
             response.Data.HasValue.Should().BeTrue();
-            response.Data.Value.Should().BeOfType(typeof(UpdateAuthorResponseMessage));
+            response.Data.Value.Should().BeOfType(typeof(AuthorResponseMessage));
             _mediator.Verify();
         }
 
@@ -35,7 +36,7 @@ namespace Catalog.Application.Tests.AuthorTests
         {
             _mediator.Setup(x => x.SendCommand<UpdateAuthorCommand, Response<Author>>(It.IsAny<UpdateAuthorCommand>()));
 
-            var response = await AuthorApplicationService.UpdateAsync(null);
+            var response = await AuthorApplicationService.UpdateAsync(null, Guid.NewGuid());
 
             response.HasError.Should().BeTrue();
             response.Messages.Count.Should().BeGreaterThan(0);
@@ -51,7 +52,7 @@ namespace Catalog.Application.Tests.AuthorTests
                 .ReturnsAsync(Response<Author>.Create().WithBusinessError("Any error"))
                 .Verifiable();
 
-            var response = await AuthorApplicationService.UpdateAsync(UpdateAuthorRequestMessageFake());
+            var response = await AuthorApplicationService.UpdateAsync(UpdateAuthorRequestMessageFake(), Guid.NewGuid());
 
             response.HasError.Should().BeTrue();
             response.Messages.Count.Should().BeGreaterThan(0);

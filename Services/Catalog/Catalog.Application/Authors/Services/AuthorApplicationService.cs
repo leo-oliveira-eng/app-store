@@ -2,6 +2,7 @@
 using Catalog.Application.Authors.Contracts;
 using Catalog.Domain.Authors.Commands;
 using Catalog.Domain.Authors.Models;
+using Catalog.Domain.Authors.Repositories;
 using Catalog.Messages.Requests;
 using Catalog.Messages.Responses;
 using Mapster;
@@ -16,15 +17,19 @@ namespace Catalog.Application.Authors.Services
     {
         private IMediatorHandler Mediator { get; }
 
-        public AuthorApplicationService(IMediatorHandler mediator)
+        private IAuthorRepository AuthorRepository { get; }
+
+        public AuthorApplicationService(IMediatorHandler mediator, IAuthorRepository authorRepository)
         {
             Mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            AuthorRepository = authorRepository ?? throw new ArgumentNullException(nameof(authorRepository));
+
             TypeAdapterConfig.GlobalSettings.Default.NameMatchingStrategy(NameMatchingStrategy.IgnoreCase);
         }
 
-        public async Task<Response<CreateAuthorResponseMessage>> CreateAsync(CreateAuthorRequestMessage requestMessage)
+        public async Task<Response<AuthorResponseMessage>> CreateAsync(CreateAuthorRequestMessage requestMessage)
         {
-            var response = Response<CreateAuthorResponseMessage>.Create();
+            var response = Response<AuthorResponseMessage>.Create();
 
             if (requestMessage is null)
                 return response.WithBusinessError("Request data is invalid");
@@ -36,12 +41,12 @@ namespace Catalog.Application.Authors.Services
             if (createAuthorResponse.HasError)
                 return response.WithMessages(createAuthorResponse.Messages);
 
-            return response.SetValue(createAuthorResponse.Data.Value.Adapt<CreateAuthorResponseMessage>());
+            return response.SetValue(createAuthorResponse.Data.Value.Adapt<AuthorResponseMessage>());
         }
 
-        public async Task<Response<UpdateAuthorResponseMessage>> UpdateAsync(UpdateAuthorRequestMessage requestMessage, Guid code)
+        public async Task<Response<AuthorResponseMessage>> UpdateAsync(UpdateAuthorRequestMessage requestMessage, Guid id)
         {
-            var response = Response<UpdateAuthorResponseMessage>.Create();
+            var response = Response<AuthorResponseMessage>.Create();
 
             if (requestMessage is null)
                 return response.WithBusinessError("Request data is invalid");
@@ -53,7 +58,17 @@ namespace Catalog.Application.Authors.Services
             if (updateAuthorResponse.HasError)
                 return response.WithMessages(updateAuthorResponse.Messages);
 
-            return response.SetValue(updateAuthorResponse.Data.Value.Adapt<UpdateAuthorResponseMessage>());
+            return response.SetValue(updateAuthorResponse.Data.Value.Adapt<AuthorResponseMessage>());
+        }
+
+        public async Task<Response<AuthorResponseMessage>> FindAsync(Guid id)
+        {
+            var author = await AuthorRepository.FindAsync(id);
+
+            if (!author.HasValue)
+                return Response<AuthorResponseMessage>.Create().WithBusinessError("Author not found");
+
+            return author.Value.Adapt<AuthorResponseMessage>();
         }
     }
 }

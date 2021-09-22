@@ -22,8 +22,12 @@ namespace Catalog.Api.Controllers
         public async Task<IActionResult> CreateAsync([FromBody] CreateAuthorRequestMessage requestMessage)
             => await WithResponseAsync(() => AuthorApplicationService.CreateAsync(requestMessage));
 
-        [HttpPut, Route("{code}"), RequiredCode]
-        public async Task<IActionResult> UpdateAsync([FromBody] UpdateAuthorRequestMessage requestMessage, Guid code)
-            => await WithResponseAsync(() => AuthorApplicationService.UpdateAsync(requestMessage, code));
+        [HttpPut, Route("{id}"), RequiredId]
+        public async Task<IActionResult> UpdateAsync([FromBody] UpdateAuthorRequestMessage requestMessage, Guid id)
+            => await WithResponseAsync(() => AuthorApplicationService.UpdateAsync(requestMessage, id));
+
+        [HttpGet, Route("{id}"), RequiredId]
+        public async Task<IActionResult> FindAsync(Guid id)
+            => await WithResponseAsync(() => AuthorApplicationService.FindAsync(id));
     }
 }

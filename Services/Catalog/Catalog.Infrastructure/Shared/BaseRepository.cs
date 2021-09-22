@@ -35,7 +35,7 @@ namespace Catalog.Infrastructure.Shared.Repositories
         }
 
         public async Task<Maybe<TEntity>> FindAsync(Guid code)
-            => await _collection.FindAsync(entity => entity.Code.Equals(code))
+            => await _collection.FindAsync(entity => entity.Id.Equals(code))
                 .GetAwaiter()
                 .GetResult()
                 .FirstOrDefaultAsync();
@@ -48,7 +48,7 @@ namespace Catalog.Infrastructure.Shared.Repositories
 
         public async Task<UpdateResult> RemoveAsync(TEntity entity)
         {
-            var filter = Builders<TEntity>.Filter.Eq(e => e.Code, entity.Code);
+            var filter = Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id);
 
             var update = Builders<TEntity>.Update
                 .CurrentDate(nameof(Entity.DeletedAt))
@@ -63,7 +63,7 @@ namespace Catalog.Infrastructure.Shared.Repositories
 
         public async Task<ReplaceOneResult> UpdateAsync(TEntity entity)
         {
-            var filter = Builders<TEntity>.Filter.Eq(e => e.Code, entity.Code);
+            var filter = Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id);
 
             var updateResult = await _collection.ReplaceOneAsync(filter, entity);
 

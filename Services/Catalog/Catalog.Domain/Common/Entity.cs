@@ -8,7 +8,7 @@ namespace Catalog.Domain.Common
     {
         private readonly List<DomainEvent> _domainEvents = new List<DomainEvent>();
 
-        public Guid Code { get; private set; }
+        public Guid Id { get; private set; }
 
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
 
@@ -22,7 +22,7 @@ namespace Catalog.Domain.Common
 
         protected Entity()
         {
-            Code = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
 
         public void AddDomainEvent(DomainEvent domainEvent) => _domainEvents.Add(domainEvent);
