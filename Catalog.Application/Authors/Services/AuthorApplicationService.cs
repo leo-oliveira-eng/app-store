@@ -38,5 +38,22 @@ namespace Catalog.Application.Authors.Services
 
             return response.SetValue(createAuthorResponse.Data.Value.Adapt<CreateAuthorResponseMessage>());
         }
+
+        public async Task<Response<UpdateAuthorResponseMessage>> UpdateAsync(UpdateAuthorRequestMessage requestMessage)
+        {
+            var response = Response<UpdateAuthorResponseMessage>.Create();
+
+            if (requestMessage is null)
+                return response.WithBusinessError("Request data is invalid");
+
+            var command = requestMessage.Adapt<UpdateAuthorCommand>();
+
+            var updateAuthorResponse = await Mediator.SendCommand<UpdateAuthorCommand, Response<Author>>(command);
+
+            if (updateAuthorResponse.HasError)
+                return response.WithMessages(updateAuthorResponse.Messages);
+
+            return response.SetValue(updateAuthorResponse.Data.Value.Adapt<UpdateAuthorResponseMessage>());
+        }
     }
 }

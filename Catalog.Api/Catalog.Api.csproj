@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Catalog.CrossCutting\Catalog.CrossCutting.csproj" />
+    <ProjectReference Include="..\Catalog.CrossCutting\Catalog.CrossCutting.csproj" />
   </ItemGroup>
 
 

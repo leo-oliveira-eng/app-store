@@ -8,5 +8,7 @@ namespace Catalog.Application.Authors.Contracts
     public interface IAuthorApplicationService
     {
         Task<Response<CreateAuthorResponseMessage>> CreateAsync(CreateAuthorRequestMessage requestMessage);
+
+        Task<Response<UpdateAuthorResponseMessage>> UpdateAsync(UpdateAuthorRequestMessage requestMessage);
     }
 }
