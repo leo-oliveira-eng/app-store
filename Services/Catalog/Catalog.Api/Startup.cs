@@ -1,4 +1,5 @@
 using Catalog.Api.Extensions;
+using Catalog.Api.Filters;
 using Catalog.Api.Middlewares;
 using Catalog.Common.Configurations;
 using Catalog.CrossCutting.Extensions;
@@ -52,6 +53,8 @@ namespace Catalog.Api
             services.AddTransient<ExceptionHandlingMiddleware>();
 
             services.AddSwagger();
+
+            services.AddScoped<RequiredCodeFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)

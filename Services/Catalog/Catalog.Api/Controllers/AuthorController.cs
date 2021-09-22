@@ -1,4 +1,5 @@
-﻿using Catalog.Application.Authors.Contracts;
+﻿using Catalog.Api.Filters;
+using Catalog.Application.Authors.Contracts;
 using Catalog.Messages.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,5 +21,9 @@ namespace Catalog.Api.Controllers
         [HttpPost, Route("")]
         public async Task<IActionResult> CreateAsync([FromBody] CreateAuthorRequestMessage requestMessage)
             => await WithResponseAsync(() => AuthorApplicationService.CreateAsync(requestMessage));
+
+        [HttpPut, Route("{code}"), RequiredCode]
+        public async Task<IActionResult> UpdateAsync([FromBody] UpdateAuthorRequestMessage requestMessage, Guid code)
+            => await WithResponseAsync(() => AuthorApplicationService.UpdateAsync(requestMessage, code));
     }
 }

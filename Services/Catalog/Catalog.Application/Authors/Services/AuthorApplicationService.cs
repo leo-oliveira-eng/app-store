@@ -39,7 +39,7 @@ namespace Catalog.Application.Authors.Services
             return response.SetValue(createAuthorResponse.Data.Value.Adapt<CreateAuthorResponseMessage>());
         }
 
-        public async Task<Response<UpdateAuthorResponseMessage>> UpdateAsync(UpdateAuthorRequestMessage requestMessage)
+        public async Task<Response<UpdateAuthorResponseMessage>> UpdateAsync(UpdateAuthorRequestMessage requestMessage, Guid code)
         {
             var response = Response<UpdateAuthorResponseMessage>.Create();
 

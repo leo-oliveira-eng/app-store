@@ -35,6 +35,7 @@ namespace Catalog.CrossCutting
             #region Handlers
 
             services.AddScoped<IRequestHandler<CreateAuthorCommand, Response<Author>>, CreateAuthorCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateAuthorCommand, Response<Author>>, UpdateAuthorCommandHandler>();
             services.AddScoped<IMediatorHandler, InMemoryBus>();
             services.AddScoped<INotificationHandler<AuthorCreatedEvent>, AuthorCreatedEventHandler>();
 
