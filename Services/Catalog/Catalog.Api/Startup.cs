@@ -3,6 +3,7 @@ using Catalog.Api.Filters;
 using Catalog.Api.Middlewares;
 using Catalog.Common.Configurations;
 using Catalog.CrossCutting.Extensions;
+using Elastic.Apm.NetCoreAll;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -71,6 +72,8 @@ namespace Catalog.Api
             }
 
             loggerFactory.AddSerilog();
+
+            app.UseAllElasticApm(Configuration);
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
