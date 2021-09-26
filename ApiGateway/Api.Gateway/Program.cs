@@ -21,6 +21,7 @@ namespace Api.Gateway
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .ConfigureLogging(logging => logging.AddConsole());
     }
 }
