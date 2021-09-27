@@ -39,7 +39,7 @@ namespace Catalog.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureCors(Configuration);
+            //services.ConfigureCors(Configuration);
 
             services.AddControllers();
 
@@ -71,13 +71,11 @@ namespace Catalog.Api
                 });
             }
 
-            loggerFactory.AddSerilog();
-
-            app.UseAllElasticApm(Configuration);
+            loggerFactory.AddSerilog();            
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

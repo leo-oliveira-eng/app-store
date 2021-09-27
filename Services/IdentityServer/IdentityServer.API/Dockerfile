@@ -3,20 +3,19 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["IdentityServer.API/IdentityServer.API.csproj", "IdentityServer.API/"]
-COPY ["IdentityServer.Data/IdentityServer.Data.csproj", "IdentityServer.Data/"]
-COPY ["IdentityServer.Domain/IdentityServer.Domain.csproj", "IdentityServer.Domain/"]
-COPY ["IdentityServer.CrossCutting/IdentityServer.CrossCutting.csproj", "IdentityServer.CrossCutting/"]
-COPY ["IdentityServer.ExternalServices/IdentityServer.ExternalServices.csproj", "IdentityServer.ExternalServices/"]
-COPY ["IdentityServer.Application/IdentityServer.Application.csproj", "IdentityServer.Application/"]
-COPY ["IdentityServer.Messaging/IdentityServer.Messaging.csproj", "IdentityServer.Messaging/"]
-RUN dotnet restore "IdentityServer.API/IdentityServer.API.csproj"
+COPY ["Services/IdentityServer/IdentityServer.API/IdentityServer.API.csproj", "Services/IdentityServer/IdentityServer.API/"]
+COPY ["Services/IdentityServer/IdentityServer.Data/IdentityServer.Data.csproj", "Services/IdentityServer/IdentityServer.Data/"]
+COPY ["Services/IdentityServer/IdentityServer.Domain/IdentityServer.Domain.csproj", "Services/IdentityServer/IdentityServer.Domain/"]
+COPY ["Services/IdentityServer/IdentityServer.CrossCutting/IdentityServer.CrossCutting.csproj", "Services/IdentityServer/IdentityServer.CrossCutting/"]
+COPY ["Services/IdentityServer/IdentityServer.ExternalServices/IdentityServer.ExternalServices.csproj", "Services/IdentityServer/IdentityServer.ExternalServices/"]
+COPY ["Services/IdentityServer/IdentityServer.Application/IdentityServer.Application.csproj", "Services/IdentityServer/IdentityServer.Application/"]
+COPY ["Services/IdentityServer/IdentityServer.Messaging/IdentityServer.Messaging.csproj", "Services/IdentityServer/IdentityServer.Messaging/"]
+RUN dotnet restore "Services/IdentityServer/IdentityServer.API/IdentityServer.API.csproj"
 COPY . .
-WORKDIR "/src/IdentityServer.API"
+WORKDIR "/src/Services/IdentityServer/IdentityServer.API"
 RUN dotnet build "IdentityServer.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
