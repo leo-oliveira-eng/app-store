@@ -1,40 +1,32 @@
 ﻿using Catalog.Domain.Authors.Models;
+using Catalog.Domain.Common;
+using Messages.Core;
 using System;
 using System.Collections.Generic;
 
 namespace Catalog.Domain.Apps.Models
 {
-    public class App
+    public class App : Entity
     {
-        public string Id { get; private set; }
+        public string Name { get; private set; }
 
-        public DateTime CreatedAt { get; private set; } = DateTime.Now;
+        public string Title { get; private set; }
 
-        public DateTime LastUpdate { get; private set; } = DateTime.Now;
+        public int Size { get; private set; }
 
-        public DateTime? DeletedAt { get; private set; }
+        public string Version { get; private set; }
 
-        public bool Deleted => DeletedAt.HasValue;
+        public string ExternalId { get; private set; }
 
-        public string Name { get; set; }
+        public DateTime ReleaseDate { get; private set; }
 
-        public string Title { get; set; }
+        public string AppLogo { get; private set; }
 
-        public int Size { get; set; }
+        public List<string> LanguageList { get; private set; }
 
-        public string Version { get; set; }
+        public decimal Price { get; private set; }
 
-        public string ExternalId { get; set; }
-
-        public DateTime ReleaseDate { get; set; }
-
-        public string AppLogo { get; set; }
-
-        public List<string> LanguageList { get; set; }
-
-        public decimal Price { get; set; }
-
-        public Author Author { get; set; }
+        public Author Author { get; private set; }
 
         private App() { }
 
@@ -52,5 +44,9 @@ namespace Catalog.Domain.Apps.Models
             Price = price;
             Author = author;
         }
+
+        public static implicit operator App(Maybe<App> entity) => entity.Value;
+
+        public static implicit operator App(Response<App> entity) => entity.Data;
     }
 }
