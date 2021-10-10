@@ -3,6 +3,9 @@ using Catalog.Application.Authors.Contracts;
 using Catalog.Application.Authors.Handlers;
 using Catalog.Application.Authors.Services;
 using Catalog.CrossCutting.Bus;
+using Catalog.Domain.Apps.Commands;
+using Catalog.Domain.Apps.Handlers;
+using Catalog.Domain.Apps.Models;
 using Catalog.Domain.Authors.Commands;
 using Catalog.Domain.Authors.Events;
 using Catalog.Domain.Authors.Handlers;
@@ -35,6 +38,7 @@ namespace Catalog.CrossCutting
             services.AddScoped<IRequestHandler<CreateAuthorCommand, Response<Author>>, CreateAuthorCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateAuthorCommand, Response<Author>>, UpdateAuthorCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteAuthorCommand, Response>, DeleteAuthorCommandHandler>();
+            services.AddScoped<IRequestHandler<CreateAppCommand, Response<App>>, CreateAppCommandHandler>();
             services.AddScoped<IMediatorHandler, InMemoryBus>();
             services.AddScoped<INotificationHandler<AuthorCreatedEvent>, AuthorCreatedEventHandler>();
 
