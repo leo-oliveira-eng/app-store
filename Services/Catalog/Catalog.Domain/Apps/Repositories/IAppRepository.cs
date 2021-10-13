@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Catalog.Domain.Apps.Models;
+using Catalog.Domain.Common.Repositories;
 
 namespace Catalog.Domain.Apps.Repositories
 {
-    public interface IAppRepository
-    {
-    }
+    public interface IAppRepository : IRepository<App> { }
 }

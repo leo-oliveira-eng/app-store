@@ -1,37 +1,33 @@
-version: '3.4'
+version: "3.4"
 
 services:
-  identityserver.api:
-    image: ${DOCKER_REGISTRY-}identityserverapi
-    build:
-      context: .
-      dockerfile: IdentityServer.API/Dockerfile
+  nosqldb:
+    image: mongo
+  
+  sqldb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
-    volumes:
-      - ./esdata:/usr/share/elasticsearch/data
-    container_name: elasticsearch
-    ports:
-      - "9200:9200"
-    environment:
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.type=single-node
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.5.1
-    container_name: kibana
-    ports:
-      - "5601:5601"
-    depends_on:
-      - elasticsearch
+    image: docker.elastic.co/kibana/kibana:7.8.1
+
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:7.8.1
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
-      dockerfile: Catalog.Api/Dockerfile
+      dockerfile: Services/Catalog/Catalog.Api/Dockerfile
+  
+  identityserver.api:
+    image: ${DOCKER_REGISTRY-}identityserverapi
+    build:
+      context: .
+      dockerfile: Services/IdentityServer/IdentityServer.API/Dockerfile
 
 volumes:
   esdata:
+    driver: local

@@ -1,21 +1,77 @@
 version: '3.4'
 
 services:
+  nosqldb:
+    container_name: nosqldb
+    restart: always
+    ports:
+        - "27017:27017"
+    volumes:
+        - ./esdata:/usr/share/mongo/data
+
+  sqldb:
+    container_name: sqldb
+    restart: always
+    environment:
+        SA_PASSWORD: "anyP4ssw0rd"
+        ACCEPT_EULA: "Y"
+    ports:
+        - "1433:1433"
+    volumes:
+      - ./esdata:/usr/share/sql/data
+  
+  elasticsearch:
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+
+  kibana:
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+
+  apm-server:
+    container_name: apm-server
+    ports:
+      - "8200:8200"
+    depends_on:
+      - elasticsearch
+    command: >
+      apm-server -e
+        -E apm-server.rum.enabled=true
+        -E apm-server.host=0.0.0.0:8200
+        -E setup.kibana.host=kibana:5601
+
   identityserver.api:
+    container_name: identityserver.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "ConnectionStrings:IdentityConnectionString=Server=sqldb;Database=Identity;User Id=sa;Password=anyP4ssw0rd;"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    depends_on:
+      - sqldb
     ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - "8005:80"
+
   catalog.api:
+    container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "MongoDB:ConnectionString=mongodb://localhost:27017"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - "ElasticApm:ServerUrls=http://localhost:8200"
+    depends_on:
+      - nosqldb
     ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - "8000:80"
+

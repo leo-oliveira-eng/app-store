@@ -36,7 +36,7 @@ namespace Catalog.Application.Authors.Services
 
             var command = requestMessage.Adapt<CreateAuthorCommand>();
 
-            Response<Author> createAuthorResponse = await Mediator.SendCommand<CreateAuthorCommand, Response<Author>>(command);
+            var createAuthorResponse = await Mediator.SendCommand<CreateAuthorCommand, Response<Author>>(command);
 
             if (createAuthorResponse.HasError)
                 return response.WithMessages(createAuthorResponse.Messages);

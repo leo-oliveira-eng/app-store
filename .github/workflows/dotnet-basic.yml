@@ -1,0 +1,32 @@
+name: .NET basic
+
+on:
+  pull_request:
+    branches: [ develop, master ]
+
+env:
+  SOLUTION: 'app-store.sln'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+
+    - name: dotnet restore
+      run: dotnet restore ${{ env.SOLUTION }}
+
+    - name: Build
+      run: dotnet build ${{ env.SOLUTION }} -c Release --no-restore
+
+    - name: Test
+      run: dotnet test ${{ env.SOLUTION }} --no-build --verbosity normal --configuration Release

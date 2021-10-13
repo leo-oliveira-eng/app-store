@@ -1,7 +1,9 @@
-﻿using Catalog.Domain.Authors.Commands;
+﻿using Catalog.Domain.Apps.Commands;
+using Catalog.Domain.Authors.Commands;
 using Catalog.Domain.Authors.Models;
 using FizzWare.NBuilder;
 using System;
+using System.Collections.Generic;
 
 namespace Catalog.Domain.Tests.Shared
 {
@@ -32,5 +34,21 @@ namespace Catalog.Domain.Tests.Shared
 
         public DeleteAuthorCommand DeleteAuthorCommandFake(Guid? id = null)
             => new DeleteAuthorCommand(id ?? Guid.NewGuid());
+
+        public CreateAppCommand CreateAppCommandFake(string name = null, string title = null, int? size = null, string version = null,
+            string externalId = null, DateTime? releaseDate = null, string appLogo = null, List<string> languageList = null,
+            decimal? price = null, Guid? authorId = null)
+            => Builder<CreateAppCommand>.CreateNew()
+                .With(x => x.Name, name ?? "Any name")
+                .With(x => x.Title, title ?? "Any title")
+                .With(x => x.Size, size ?? 333)
+                .With(x => x.Version, version ?? "Latest")
+                .With(x => x.ExternalId, externalId ?? "Any Id")
+                .With(x => x.ReleaseDate, releaseDate ?? DateTime.Now.AddDays(-1))
+                .With(x => x.AppLogo, appLogo ?? "whereismylogo.com.br")
+                .With(x => x.LanguageList, languageList ?? new List<string> { "pt-br" })
+                .With(x => x.Price, price ?? 1M)
+                .With(x => x.AuthorID, authorId ?? Guid.NewGuid())
+                .Build();
     }
 }

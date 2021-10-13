@@ -11,18 +11,13 @@ namespace Catalog.Domain.Authors.Commands
 
         public override Response Validate()
         {
-            var response = Response.Create();
+            var response = base.Validate();
 
             if (string.IsNullOrWhiteSpace(Name))
                 response.WithBusinessError(nameof(Name), $"{nameof(Name)} is invalid");
 
             if (!Valuables.Utils.CNPJ.IsValid(CNPJ))
                 response.WithBusinessError(nameof(CNPJ), $"{nameof(CNPJ)} is invalid");
-            
-            var baseValidateResponse = base.Validate();
-
-            if (baseValidateResponse.HasError)
-                response.WithMessages(baseValidateResponse.Messages);
 
             return response;
         }

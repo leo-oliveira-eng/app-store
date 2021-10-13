@@ -3,6 +3,7 @@ using Catalog.Api.Filters;
 using Catalog.Api.Middlewares;
 using Catalog.Common.Configurations;
 using Catalog.CrossCutting.Extensions;
+using Elastic.Apm.NetCoreAll;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +39,7 @@ namespace Catalog.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureCors(Configuration);
+            //services.ConfigureCors(Configuration);
 
             services.AddControllers();
 
@@ -70,11 +71,11 @@ namespace Catalog.Api
                 });
             }
 
-            loggerFactory.AddSerilog();
+            loggerFactory.AddSerilog();            
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
