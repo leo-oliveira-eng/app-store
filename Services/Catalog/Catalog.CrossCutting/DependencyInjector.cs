@@ -6,11 +6,13 @@ using Catalog.CrossCutting.Bus;
 using Catalog.Domain.Apps.Commands;
 using Catalog.Domain.Apps.Handlers;
 using Catalog.Domain.Apps.Models;
+using Catalog.Domain.Apps.Repositories;
 using Catalog.Domain.Authors.Commands;
 using Catalog.Domain.Authors.Events;
 using Catalog.Domain.Authors.Handlers;
 using Catalog.Domain.Authors.Models;
 using Catalog.Domain.Authors.Repositories;
+using Catalog.Infrastructure.App.Repositories;
 using Catalog.Infrastructure.Author.Repositories;
 using Catalog.Infrastructure.Context;
 using Catalog.Infrastructure.Context.Contracts;
@@ -28,6 +30,7 @@ namespace Catalog.CrossCutting
             #region Data
 
             services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IAppRepository, AppRepository>();
             services.AddScoped<IMongoContext, MongoContext>();
             EntityMapping.MapEntity();
 
